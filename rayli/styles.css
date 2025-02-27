@@ -9,6 +9,8 @@ body {
     text-align: center;
     background-color: #1a1a1a;
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 .game-container {
@@ -51,6 +53,29 @@ button:hover {
 }
 
 canvas {
+    width: 100%; /* Ensures the canvas takes the full width of the container */
+    height: auto; /* Keeps the aspect ratio consistent */
     border: 2px solid #fff;
     background-color: #333;
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 600px) {
+    .game-container {
+        padding-top: 30px; /* Reduced padding on small screens */
+    }
+
+    button {
+        font-size: 14px; /* Smaller buttons on mobile */
+        padding: 8px 16px;
+    }
+
+    h1 {
+        font-size: 24px; /* Smaller title font on mobile */
+    }
+
+    canvas {
+        width: 90%; /* Make canvas smaller on mobile to fit well */
+        height: auto;
+    }
 }
