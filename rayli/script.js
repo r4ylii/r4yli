@@ -25,6 +25,8 @@ let gameOver = false;
 // Swipe variables for mobile support
 let touchStartX = 0;
 let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
 
 // Start game
 startBtn.addEventListener("click", () => {
@@ -110,28 +112,33 @@ window.addEventListener("keydown", (event) => {
 
 // Handle swipe events on mobile
 canvas.addEventListener("touchstart", (e) => {
+    // Prevent pull-to-refresh behavior in mobile browsers
+    e.preventDefault();
+    
     touchStartX = e.changedTouches[0].pageX;
     touchStartY = e.changedTouches[0].pageY;
 });
 
 canvas.addEventListener("touchmove", (e) => {
-    const touchEndX = e.changedTouches[0].pageX;
-    const touchEndY = e.changedTouches[0].pageY;
+    e.preventDefault(); // Prevent default touch behavior (like scroll or zoom)
+
+    touchEndX = e.changedTouches[0].pageX;
+    touchEndY = e.changedTouches[0].pageY;
 
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
     // Only detect swipes if the touch movement is more than a certain threshold
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (deltaX > 0 && direction !== "LEFT") {
+        if (deltaX > 30 && direction !== "LEFT") {
             direction = "RIGHT";
-        } else if (deltaX < 0 && direction !== "RIGHT") {
+        } else if (deltaX < -30 && direction !== "RIGHT") {
             direction = "LEFT";
         }
     } else {
-        if (deltaY > 0 && direction !== "UP") {
+        if (deltaY > 30 && direction !== "UP") {
             direction = "DOWN";
-        } else if (deltaY < 0 && direction !== "DOWN") {
+        } else if (deltaY < -30 && direction !== "DOWN") {
             direction = "UP";
         }
     }
