@@ -53,29 +53,62 @@ button:hover {
 }
 
 canvas {
-    width: 100%; /* Ensures the canvas takes the full width of the container */
-    height: auto; /* Keeps the aspect ratio consistent */
+    width: 100%;
+    height: auto;
     border: 2px solid #fff;
     background-color: #333;
 }
 
-/* Adjust for smaller screens */
+/* Mobile controls (hidden by default) */
+#mobileControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#mobileControls.hidden {
+    display: none;
+}
+
+.row {
+    display: flex;
+}
+
+button {
+    font-size: 18px;
+}
+
+#mobileControls button {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    font-size: 18px;
+    background-color: #333;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+#mobileControls button:hover {
+    background-color: #4CAF50;
+}
+
 @media (max-width: 600px) {
+    /* Only show mobile controls on smaller screens */
+    #mobileControls {
+        display: flex;
+    }
+
     .game-container {
-        padding-top: 30px; /* Reduced padding on small screens */
+        padding-top: 30px;
     }
 
     button {
-        font-size: 14px; /* Smaller buttons on mobile */
-        padding: 8px 16px;
-    }
-
-    h1 {
-        font-size: 24px; /* Smaller title font on mobile */
+        font-size: 14px;
     }
 
     canvas {
-        width: 90%; /* Make canvas smaller on mobile to fit well */
+        width: 90%;
         height: auto;
     }
 }
