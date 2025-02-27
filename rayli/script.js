@@ -22,6 +22,10 @@ let gameInterval;
 let score = 0;
 let gameOver = false;
 
+// Swipe variables for mobile support
+let touchStartX = 0;
+let touchStartY = 0;
+
 // Start game
 startBtn.addEventListener("click", () => {
     console.log("Start Button Clicked!");
@@ -102,4 +106,37 @@ window.addEventListener("keydown", (event) => {
     if (event.key === "z" && direction !== "DOWN") direction = "UP";    // Z for up
     if (event.key === "d" && direction !== "LEFT") direction = "RIGHT";  // D for right
     if (event.key === "s" && direction !== "UP") direction = "DOWN";    // S for down
+});
+
+// Handle swipe events on mobile
+canvas.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].pageX;
+    touchStartY = e.changedTouches[0].pageY;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+    const touchEndX = e.changedTouches[0].pageX;
+    const touchEndY = e.changedTouches[0].pageY;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Only detect swipes if the touch movement is more than a certain threshold
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0 && direction !== "LEFT") {
+            direction = "RIGHT";
+        } else if (deltaX < 0 && direction !== "RIGHT") {
+            direction = "LEFT";
+        }
+    } else {
+        if (deltaY > 0 && direction !== "UP") {
+            direction = "DOWN";
+        } else if (deltaY < 0 && direction !== "DOWN") {
+            direction = "UP";
+        }
+    }
+
+    // Update touch start for the next move
+    touchStartX = touchEndX;
+    touchStartY = touchEndY;
 });
